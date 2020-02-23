@@ -53,88 +53,88 @@ $service_started_template =
 
 $json = '{
     "services" : [
-        { 
-            "name" : "Service status", 
-            "executable" : "C:\\BlocServices\\CMDServices\\CheckServiceStatus\\CheckServiceStatus.exe" 
+        {
+            "name" : "Bloc.MSMQJobs", 
+            "executable" : "C:\\BlocServices\\CMDServices\\RedisMQ\\Bloc.MSMQJobs.exe"
         },
         { 
-            "name" : "campaign company report", 
+            "name" : "Bloc.CampaignCompanyReport", 
             "executable" : "C:\\BlocServices\\CMDServices\\Bloc.CampaignCompanyReport\\Bloc.CampaignCompanyReport.exe" 
         },
         { 
-            "name" : "campaign team report", 
+            "name" : "Bloc.CampaignTeamReport", 
             "executable" : "C:\\BlocServices\\CMDServices\\Bloc.CampaignTeamReport\\Bloc.CampaignTeamReport.exe" 
         },
         { 
-            "name" : "campaign user report", 
+            "name" : "Bloc.CampaignUserReport", 
             "executable" : "C:\\BlocServices\\CMDServices\\Bloc.CampaignUserReport\\Bloc.CampaignUserReport.exe" 
         },
         { 
-            "name" : "invoice fee reminder", 
+            "name" : "FeeInvoiceService", 
             "executable" : "C:\\BlocServices\\CMDServices\\FeeInvoiceService\\FeeInvoiceService.exe" 
         },
         { 
-            "name" : "elastic search indexer", 
+            "name" : "LuceneDBIndexer", 
             "executable" : "C:\\BlocServices\\CMDServices\\LuceneDBIndex\\LuceneDBIndexer.exe" 
         },
         { 
-            "name" : "orgtree builder", 
+            "name" : "Bloc.BuildOrgTree", 
             "executable" : "C:\\BlocServices\\CMDServices\\BuildOrgTree\\bloc.buildOrgTree.exe" 
         },
         { 
-            "name" : "push booking orders", 
+            "name" : "Bloc.PushBookingOrderToHip", 
             "executable" : "C:\\BlocServices\\CMDServices\\PushBoookingOrderToHip\\Bloc.PushBookingOrderToHip.exe" 
         },
         { 
-            "name" : "booking sms reminder", 
+            "name" : "SendBookingSMSReminderService", 
             "executable" : "C:\\BlocServices\\CMDServices\\SendBookingSMSReminderService\\SendBookingSMSReminderService.exe" 
         },
         { 
-            "name" : "FotballData sync", 
+            "name" : "FootBallSync", 
             "executable" : "C:\\BlocServices\\CMDServices\\Fotball\\FootballSync.exe" 
         },
         { 
-            "name" : "NIFLastChangesFromNifByOrgId1",
+            "name" : "NIFSyncFunctionsByOrgId1",
             "executable" : "C:\\BlocServices\\CMDServices\\nifservices\\NIFSyncFunctionsByOrgId1\\NIFSyncFunctionsByOrgId1.exe" 
         },
         { 
-            "name" : "NifSyncmembersByOrgIdFromServiceBus.exe",
+            "name" : "NIFSyncMembersByOrgIdFromServiceBus",
             "executable" : "C:\\BlocServices\\CMDServices\\nifservices\\NifSyncmembersByOrgIdFromServiceBus\\NifSyncmembersByOrgIdFromServiceBus.exe" 
         },
         { 
-            "name" : "Bloc.SendFormPageNotificationEmail.exe", 
+            "name" : "SendFormPageNotificationEmail", 
             "executable" : "C:\\BlocServices\\CMDServices\\FormWidgetNotification\\Bloc.SendFormPageNotificationEmail.exe" 
         },
         { 
-            "name" : "mportMemberMatchService.exe",
+            "name" : "ImportMemberMatchService",
             "executable" : "C:\\BlocServices\\CMDServices\\Bloc.ImportMemberMatchService\\ImportMemberMatchService.exe" 
         },
         { 
-            "name" : "PolarPullNotification.exe",
+            "name" : "PolarPullNotification",
             "executable" : "C:\\BlocServices\\CMDServices\\PolarService\\PolarPullNotification.exe" 
         },
         { 
-            "name" : "LetsEncryptService.exe", 
+            "name" : "LetsEncryptService", 
             "executable" : "C:\\BlocServices\\CMDServices\\LetsEncryptService\\LetsEncryptService.exe" 
         },
         { 
-            "name" : "Bloc.TrainingService", 
+            "name" : "Bloc.TrainingReport", 
             "executable" : "C:\\BlocServices\\CMDServices\\Bloc.TrainingService\\Bloc.TrainingReport.exe" 
         },
         { 
-            "name" : "Bloc.CronService", 
+            "name" : "CronService", 
             "executable" : "C:\\BlocServices\\CMDServices\\CronService\\CronService.exe" 
         },
         { 
-            "name" : "NIF Result service", 
+            "name" : "NIFResultService", 
             "executable" : "C:\\BlocServices\\CMDServices\\NIFServices\\NIFResultService\\NIFResultService.exe" 
         },
         { 
-            "name" : "Reply email service", 
+            "name" : "Bloc.ReplyToEmailService", 
             "executable" : "C:\\BlocServices\\CMDServices\\ReplyEmailService\\Bloc.ReplyToEmailService.exe" 
         },
         { 
-            "name" : "DBRequest service", 
+            "name" : "DBQueryService", 
             "executable" : "C:\\BlocServices\\CMDServices\\DBQueryService\\DBQueryService.exe" 
         }
     ]
