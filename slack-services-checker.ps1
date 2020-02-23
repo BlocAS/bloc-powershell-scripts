@@ -1,5 +1,6 @@
-# todo rewrite to tasks https://stackify.com/what-is-powershell/
-
+# Imports 
+. .\_slackhook.ps1
+. .\error-handler.ps1
 
 # administrator check 
 $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
@@ -8,8 +9,6 @@ $isAdmin = $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::A
 # variables
 $ip_address = (get-netadapter | get-netipaddress | ? addressfamily -eq 'IPv4').ipaddress;
 
-# slack
-$SlackChannelUri = "https://hooks.slack.com/services/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"
 
 # make sure script is run with elevated priveleges
 if(!$isAdmin){
@@ -36,20 +35,7 @@ $service_started_template =
         }
     }
 "@
-# for testing 
-# $json = '{
-#     "services" : [
-#         { 
-#             "name" : "Calculator", 
-#             "executable" : "C:\\Windows\\system32\\calc.exe" 
-#         },
-#         { 
-#             "name" : "notepad", 
-#             "executable" : "C:\\Windows\\system32\\notepad.exe" 
-#         }
-        
-#     ]
-# }'
+
 
 $json = '{
     "services" : [
@@ -102,7 +88,7 @@ $json = '{
             "executable" : "C:\\BlocServices\\CMDServices\\nifservices\\NifSyncmembersByOrgIdFromServiceBus\\NifSyncmembersByOrgIdFromServiceBus.exe" 
         },
         { 
-            "name" : "SendFormPageNotificationEmail", 
+            "name" : "Bloc.SendFormPageNotificationEmail", 
             "executable" : "C:\\BlocServices\\CMDServices\\FormWidgetNotification\\Bloc.SendFormPageNotificationEmail.exe" 
         },
         { 
@@ -140,27 +126,50 @@ $json = '{
     ]
 }'
 
+#for testing 
+# $json = '{
+#     "services" : [
+#         { 
+#             "name" : "Calculator", 
+#             "executable" : "C:\\Windows\\system32\\calc.exe" 
+#         },
+#         { 
+#             "name" : "notepad", 
+#             "executable" : "C:\\Windows\\system32\\notepad.exe" 
+#         }
+        
+#     ]
+# }'
+
 
 $object = $json | ConvertFrom-Json
-Write-Host $object.services
+
 $processes_started = ""
 $processesCount = $object.services.Count
-Write-Host $processesCount
 $startedCount = 0
 $runningCount = 0
+
 foreach($service in $object.services){
 
-    Write-Host $service
     $ServiceName = $service.name
     $ServiceExecutable = $service.executable
 
-    $processIsRunning = (Get-Process -Name $ServiceName -ErrorAction SilentlyContinue) -eq $null
+    $processNotRunning = $null -eq (Get-Process -Name $ServiceName -ErrorAction SilentlyContinue)
     
-    if($processIsRunning) {
+    if($processNotRunning) {
         Write-Host $ServiceName "is not running! We need to start it!"
         $processes_started += $ServiceName + ", "
         $startedCount = $startedCount + 1
-        .$ServiceExecutable
+
+        Start-Process $ServiceExecutable # starting the service
+        Start-Sleep -Seconds 5
+        $didStart = $null -ne (Get-Process -Name $ServiceName -ErrorAction SilentlyContinue)
+        Write-Host 'Started successfully' $didStart
+        trap {
+            TrapHandler $_
+            continue
+        }
+
     } else {
         $runningCount = $runningCount + 1
         Write-Host $ServiceName "is already running, do nothing..."
@@ -173,6 +182,8 @@ Write-Host "Already running" $runningCount
 Write-Host "Processes checked" ($startedCount+$runningCount)
 Write-Host "JSON count" $processesCount
 Write-Host "-------------------------------------"
-$body = $service_started_template.Replace("%SERVICE_NAME%", $processes_started).Replace("%PROCESSES_TOTAL%", $processesCount).Replace("%PROCESSES_RUNNING%", $runningCount).Replace("%PROCESSES_STARTED%", $startedCount).Replace("%IP_ADDR%", $ip_address)
-Invoke-RestMethod -uri $SlackChannelUri -Method Post -body $body -ContentType 'application/json'
+if($startedCount -gt 0){
+    $body = $service_started_template.Replace("%SERVICE_NAME%", $processes_started).Replace("%PROCESSES_TOTAL%", $processesCount).Replace("%PROCESSES_RUNNING%", $runningCount).Replace("%PROCESSES_STARTED%", $startedCount).Replace("%IP_ADDR%", $ip_address)
+    Invoke-RestMethod -uri $SlackChannelUri -Method Post -body $body -ContentType 'application/json'
+}
 
