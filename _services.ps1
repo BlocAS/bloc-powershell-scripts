@@ -1,0 +1,1 @@
+[Array] $servicesArray = "Bloc.MSMQService", "Bloc.NewsletterService", "Bloc.RecalculateBookPoint", "Bloc.ReCalculatePointAndTopListService"

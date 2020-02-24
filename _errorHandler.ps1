@@ -1,5 +1,4 @@
 # Webhooks Channel
-. .\_slackhook.ps1
 
 $BodyTemplate = 
 @"
@@ -23,12 +22,12 @@ $BodyTemplate =
 
 
 
-function TrapHandler($error)
+function TrapHandler($errorMsg)
 {
-    $body = $BodyTemplate.Replace("%ERROR%",$error)
+    $body = $BodyTemplate.Replace("%ERROR%",$errorMsg)
 
     Write-Host $SlackChannelUri
     Invoke-RestMethod -uri $SlackChannelUri -Method Post -body $body -ContentType 'application/json'
 
-    Write-Host "oops - $error" 
+    Write-Host "oops - $errorMsg" 
 }
