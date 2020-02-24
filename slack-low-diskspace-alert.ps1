@@ -10,7 +10,7 @@ param(
 )
 
 # Imports
-. .\_slackhook.ps1
+. .\_slackwebhook.ps1
 
 $sep = ":";
 
